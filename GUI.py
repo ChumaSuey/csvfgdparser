@@ -63,9 +63,14 @@ class FGDApp:
         if file_path:
             solid_details, point_details, base_details = backend.parse_fgd(file_path)
 
-            self.create_window("Solid Classes", f"Count: {len(solid_details)}\n" + "\n".join(solid_details))
-            self.create_window("Point Classes", f"Count: {len(point_details)}\n" + "\n".join(point_details))
-            self.create_window("Base Classes", f"Count: {len(base_details)}\n" + "\n".join(base_details))
+            solid_count = (len(solid_details) + 1) // 2 if len(solid_details) % 2 != 0 else len(solid_details) // 2
+            point_count = ((len(point_details) + 1) // 2 if len(point_details) % 2 != 0 else len(
+                point_details) // 2) + 1
+            base_count = (len(base_details) + 1) // 2 if len(base_details) % 2 != 0 else len(base_details) // 2
+
+            self.create_window("Solid Classes", f"Count: {solid_count}\n" + "\n".join(solid_details))
+            self.create_window("Point Classes", f"Count: {point_count}\n" + "\n".join(point_details))
+            self.create_window("Base Classes", f"Count: {base_count}\n" + "\n".join(base_details))
 
     def create_window(self, title, content):
         window = tk.Toplevel(self.root)

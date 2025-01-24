@@ -1,30 +1,45 @@
 import csv
-import re
 import os
+import re
+
+import re
 
 def parse_fgd(file_path):
     solid_details = []
     point_details = []
     base_details = []
+    solid_classes_set = set()
+    point_classes_set = set()
+    base_classes_set = set()
 
     try:
         with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
-            for line in file:
-                try:
-                    if line.startswith('@SolidClass'):
-                        match = re.search(r'@SolidClass.*?=\s*(\w+)\s*:\s*"([^"]*)"', line)
-                        if match:
-                            solid_details.append(f"- {match.group(1)} : \"{match.group(2)}\"")
-                    elif line.startswith('@PointClass'):
-                        match = re.search(r'@PointClass.*?=\s*(\w+)\s*:\s*"([^"]*)"', line)
-                        if match:
-                            point_details.append(f"- {match.group(1)} : \"{match.group(2)}\"")
-                    elif line.startswith('@baseclass'):
-                        match = re.search(r'@baseclass.*?=\s*(\w+)', line)
-                        if match:
-                            base_details.append(f"- {match.group(1)}")
-                except re.error as e:
-                    print(f"Regex error: {e}")
+            content = file.read()
+            solid_classes = re.findall(r'@SolidClass.*?=\s*(\w+)\s*:\s*"([^"]*)"\s*\[(.*?)\]', content, re.DOTALL)
+            point_classes = re.findall(r'@PointClass.*?=\s*(\w+)\s*:\s*"([^"]*)"\s*\[(.*?)\]', content, re.DOTALL)
+            base_classes = re.findall(r'@baseclass.*?=\s*(\w+)\s*\[(.*?)\]', content, re.DOTALL)
+
+            for match in solid_classes:
+                class_name, description, properties = match
+                if class_name not in solid_classes_set:
+                    solid_classes_set.add(class_name)
+                    solid_details.append(f"- {class_name} : \"{description}\"")
+                    solid_details.append(f"  Properties: {properties.strip()}")
+
+            for match in point_classes:
+                class_name, description, properties = match
+                if class_name not in point_classes_set:
+                    point_classes_set.add(class_name)
+                    point_details.append(f"- {class_name} : \"{description}\"")
+                    point_details.append(f"  Properties: {properties.strip()}")
+
+            for match in base_classes:
+                class_name, properties = match
+                if class_name not in base_classes_set:
+                    base_classes_set.add(class_name)
+                    base_details.append(f"- {class_name}")
+                    base_details.append(f"  Properties: {properties.strip()}")
+
     except FileNotFoundError:
         print(f"File not found: {file_path}")
     except IOError as e:
