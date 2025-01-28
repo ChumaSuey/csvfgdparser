@@ -1,0 +1,335 @@
+ClassType,Details
+Solid,"- worldspawn : ""World entity"""
+Solid,"  Properties: message(string) : ""Text on entering the world""
+	worldtype(choices) : ""Ambience"" : 0 =
+	[
+		0 : ""Medieval""
+		1 : ""Metal (runic)""
+		2 : ""Base"""
+Solid,"- func_illusionary : ""Static nonsolid model"""
+Solid,  Properties: 
+Solid,"- func_group : ""Group of brushes for in-editor use"""
+Solid,  Properties: 
+Solid,"- func_detail : ""Group of brushes for certain compilers"""
+Solid,  Properties: 
+Solid,"- func_detail_illusionary : ""func_detail variant with no collision (players / monsters / gunfire) and doesn't split world faces."""
+Solid,  Properties: 
+Solid,"- func_detail_wall : ""func_detail variant that doesn't split world faces."""
+Solid,  Properties: 
+Solid,"- func_door : ""Basic door"""
+Solid,"  Properties: speed(integer) : ""Speed"" : 100
+	sounds(choices) : ""Sound"" : 0 =
+	[
+        	0: ""Silent""
+		1: ""Stone""
+		2: ""Machine""
+		3: ""Stone Chain""
+		4: ""Screechy Metal"""
+Solid,"- func_door_secret : ""Secret door"""
+Solid,"  Properties: angle(integer) : ""Direction of second move""
+	t_width(integer) : ""First move length""
+	t_length(integer) : ""Second move length""
+	dmg(integer) : ""Damage when blocked"" : 2
+	wait(string) : ""Wait before close"" : ""2""
+	sounds(choices) : ""Sounds"" : 3 =
+	[
+		1: ""Medieval""
+		2: ""Metal""
+		3: ""Base"""
+Solid,"- func_wall : ""Wall, starts animation when triggered (if supporting texture)"""
+Solid,  Properties: 
+Solid,"- func_button : ""Button"""
+Solid,"  Properties: speed(integer) : ""Speed"" : 40
+	lip(integer) : ""Lip"" : 4
+	target(target_source) : ""Target""
+	health(integer) : ""Health (shootable)""
+	sounds(choices) : ""Sounds"" =
+	[
+		0 : ""Steam metal""
+		1 : ""Wooden clunk""
+		2 : ""Metallic clink""
+		3 : ""In-out"""
+Solid,"- func_train : ""Moving platform"""
+Solid,"  Properties: sounds(choices) : ""Sound"" : 1 =
+	[
+		0: ""Silent""
+		1: ""Ratchet Metal"""
+Solid,"- func_plat : ""Elevator"""
+Solid,"  Properties: spawnflags(Flags) =
+	[
+		1 : ""Low trigger volume"" : 0"
+Solid,"- func_episodegate : ""Episode Gate"""
+Solid,"  Properties: spawnflags(Flags) =
+	[
+		1 : ""Episode 1"" : 1
+		2 : ""Episode 2"" : 0
+		4 : ""Episode 3"" : 0
+		8 : ""Episode 4"" : 0"
+Solid,"- func_bossgate : ""Boss gate"""
+Solid,  Properties: 
+Solid,"- trigger_changelevel : ""Trigger: Change level"""
+Solid,"  Properties: map(string) : ""Next map""
+	target(target_destination) : ""Target""
+	spawnflags(flags) =
+	[
+		1: ""No intermission"" : 0"
+Solid,"- trigger_once : ""Trigger: Activate once"""
+Solid,"  Properties: health(integer) : ""Health (shootable)""
+	spawnflags(flags) = [ 1: ""Not touchable"" : 0"
+Solid,"- trigger_multiple : ""Trigger: Activate multiple"""
+Solid,"  Properties: wait(string) : ""Wait before reset"" : ""0.2""
+	health(integer) : ""Health (shootable)""
+	spawnflags(flags) = [ 1: ""Not touchable"" : 0"
+Solid,"- trigger_onlyregistered : ""Trigger: Registered only"""
+Solid,"  Properties: spawnflags(flags) = [ 1: ""Not touchable"" : 0"
+Solid,"- trigger_secret : ""Trigger: Secret"""
+Solid,"  Properties: sounds(choices) : ""Sound"" : 1 =
+	[
+		1 : ""Secret sound""
+		2 : ""Beep beep"""
+Solid,"- trigger_teleport : ""Trigger: Teleporter"""
+Solid,"  Properties: spawnflags(Flags) =
+	[
+		1 : ""Player only"" : 0
+		2 : ""Silent"" : 0"
+Solid,"- trigger_setskill : ""Trigger: Set skill"""
+Solid,"  Properties: message(choices) : ""Skill to change to"" : 1 =
+	[
+        0 : ""Easy""
+        1 : ""Medium""
+        2 : ""Hard""
+        3 : ""Nightmare!"""
+Solid,"- trigger_monsterjump : ""Trigger: Monster jump"""
+Solid,"  Properties: speed(integer) : ""Jump Speed"" : 200
+	height(integer) : ""Jump Height"" : 200"
+Solid,"- trigger_push : ""Trigger: Push"""
+Solid,"  Properties: spawnflags(flags) = [ 1: ""Push once"" : 0"
+Solid,"- trigger_hurt : ""Trigger: Hurt"""
+Solid,"  Properties: dmg(integer) : ""Damage per second"" : 5"
+
+Point,"- info_player_start : ""Player 1 start"""
+Point,  Properties: 
+Point,"- info_player_coop : ""Player cooperative start"""
+Point,  Properties: 
+Point,"- info_player_start2 : ""Player episode return point"""
+Point,  Properties: 
+Point,"- info_player_deathmatch : ""Deathmatch start"""
+Point,  Properties: 
+Point,"- testplayerstart : ""Testing player start"""
+Point,  Properties: 
+Point,"- info_teleport_destination : ""Teleporter destination"""
+Point,  Properties: 
+Point,"- info_null : ""info_null (spotlight target)"""
+Point,"  Properties: targetname(target_source) : ""Name"""
+Point,"- info_intermission : ""Intermission camera"""
+Point,"  Properties: mangle(string) : ""Camera angle (Pitch Yaw Roll)"""
+Point,"- item_cells : ""Thunderbolt ammo"""
+Point,  Properties: 
+Point,"- item_rockets : ""Rockets"""
+Point,  Properties: 
+Point,"- item_shells : ""Shells"""
+Point,  Properties: 
+Point,"- item_spikes : ""Nailgun/Perforator ammo"""
+Point,  Properties: 
+Point,"- item_health : ""Health pack"""
+Point,"  Properties: spawnflags(flags) =
+	[
+		1 : ""Rotten"" : 0
+		2 : ""Megahealth"" : 0"
+Point,"- item_artifact_envirosuit : ""Environmental protection suit"""
+Point,  Properties: 
+Point,"- item_artifact_super_damage : ""Quad damage"""
+Point,  Properties: 
+Point,"- item_artifact_invulnerability : ""Pentagram of Protection"""
+Point,  Properties: 
+Point,"- item_artifact_invisibility : ""Ring of Shadows"""
+Point,  Properties: 
+Point,"- item_armorInv : ""Red armor (200%)"""
+Point,  Properties: 
+Point,"- item_armor2 : ""Yellow armor (150%)"""
+Point,  Properties: 
+Point,"- item_armor1 : ""Green armor (100%)"""
+Point,  Properties: 
+Point,"- item_key1 : ""Silver key"""
+Point,  Properties: 
+Point,"- item_key2 : ""Gold key"""
+Point,  Properties: 
+Point,"- item_sigil : ""Sigil"""
+Point,"  Properties: spawnflags(Flags) =
+	[
+		1 : ""Episode 1"" : 1
+		2 : ""Episode 2"" : 0
+		4 : ""Episode 3"" : 0
+		8 : ""Episode 4"" : 0"
+Point,"- weapon_supershotgun : ""Double-barrelled shotgun"""
+Point,  Properties: 
+Point,"- weapon_nailgun : ""Nailgun"""
+Point,  Properties: 
+Point,"- weapon_supernailgun : ""Super nailgun"""
+Point,  Properties: 
+Point,"- weapon_grenadelauncher : ""Grenade launcher"""
+Point,  Properties: 
+Point,"- weapon_rocketlauncher : ""Rocket launcher"""
+Point,  Properties: 
+Point,"- weapon_lightning : ""Thunderbolt"""
+Point,  Properties: 
+Point,"- monster_army : ""Grunt"""
+Point,  Properties: 
+Point,"- monster_dog : ""Nasty Doggie"""
+Point,  Properties: 
+Point,"- monster_ogre : ""Ogre"""
+Point,  Properties: 
+Point,"- monster_ogre_marksman : ""Ogre marksman"""
+Point,  Properties: 
+Point,"- monster_knight : ""Knight"""
+Point,  Properties: 
+Point,"- monster_hell_knight : ""Hell knight"""
+Point,  Properties: 
+Point,"- monster_wizard : ""Scrag"""
+Point,  Properties: 
+Point,"- monster_demon1 : ""Fiend"""
+Point,  Properties: 
+Point,"- monster_shambler : ""Shambler"""
+Point,  Properties: 
+Point,"- monster_boss : ""Chthon"""
+Point,  Properties: 
+Point,"- monster_enforcer : ""Enforcer"""
+Point,  Properties: 
+Point,"- monster_shalrath : ""Vore"""
+Point,  Properties: 
+Point,"- monster_tarbaby : ""Spawn"""
+Point,  Properties: 
+Point,"- monster_fish : ""Rotfish"""
+Point,  Properties: 
+Point,"- monster_oldone : ""Shub-Niggurath"""
+Point,  Properties: 
+Point,"- monster_zombie : ""Zombie"""
+Point,"  Properties: spawnflags(Flags) =
+	[
+		1 : ""Crucified"" : 0
+		2 : ""Ambush"" : 0"
+Point,"- light : ""Invisible light source"""
+Point,"  Properties: spawnflags(Flags) = [ 1 : ""Start off"" : 0"
+Point,"- light_fluoro : ""Fluorescent light"""
+Point,"  Properties: spawnflags(Flags) = [ 1 : ""Start off"" : 0"
+Point,"- light_fluorospark : ""Sparking fluorescent light"""
+Point,"  Properties: spawnflags(Flags) = [ 1 : ""Start off"" : 0"
+Point,"- light_globe : ""Globe light"""
+Point,"  Properties: spawnflags(Flags) = [ 1 : ""Start off"" : 0"
+Point,"- light_flame_large_yellow : ""Large yellow flame"""
+Point,"  Properties: spawnflags(Flags) = [ 1 : ""Start off"" : 0"
+Point,"- light_flame_small_yellow : ""Small yellow flame"""
+Point,"  Properties: spawnflags(Flags) = [ 1 : ""Start off"" : 0"
+Point,"- light_flame_small_white : ""Small white flame"""
+Point,"  Properties: spawnflags(Flags) = [ 1 : ""Start off"" : 0"
+Point,"- light_torch_small_walltorch : ""Small walltorch"""
+Point,  Properties: 
+Point,"- air_bubbles : ""Air bubbles"""
+Point,  Properties: 
+Point,"- event_lightning : ""Chthon's lightning"""
+Point,  Properties: 
+Point,"- misc_fireball : ""Small fireball"""
+Point,"  Properties: speed(integer) : ""Speed"" : 40"
+Point,"- misc_explobox : ""Large exploding container"""
+Point,  Properties: 
+Point,"- misc_explobox2 : ""Small exploding container"""
+Point,  Properties: 
+Point,"- misc_teleporttrain : ""Flying teleporter destination"""
+Point,"  Properties: target(string) : ""First stop target""
+	targetname(target_source) : ""Name"""
+Point,"- trap_spikeshooter : ""Triggered shooter"""
+Point,"  Properties: spawnflags(Flags) =
+	[
+		1 : ""Spike"" : 0
+		2 : ""Laser"" : 0"
+Point,"- trap_shooter : ""Continuous shooter"""
+Point,"  Properties: nextthink(integer) : ""Delay before first spike""
+	wait(integer) : ""Delay between spikes""
+	spawnflags(Flags) =
+	[
+		1 : ""Spike"" : 0
+		2 : ""Laser"" : 0"
+Point,"- ambient_drip : ""Dripping sound"""
+Point,  Properties: 
+Point,"- ambient_drone : ""Engine/machinery sound"""
+Point,  Properties: 
+Point,"- ambient_comp_hum : ""Computer background sounds"""
+Point,  Properties: 
+Point,"- ambient_flouro_buzz : ""Fluorescent buzzing sound"""
+Point,  Properties: 
+Point,"- ambient_light_buzz : ""Buzzing sound from light"""
+Point,  Properties: 
+Point,"- ambient_suck_wind : ""Wind sound"""
+Point,  Properties: 
+Point,"- ambient_swamp1 : ""Frogs croaking"""
+Point,  Properties: 
+Point,"- ambient_swamp2 : ""Frogs croaking B"""
+Point,  Properties: 
+Point,"- ambient_thunder : ""Thunder sound"""
+Point,  Properties: 
+Point,"- path_corner : ""Waypoint for platforms and monsters"""
+Point,"  Properties: target(target_source) : ""Next target""
+	wait(integer) : ""Wait"" : 0"
+Point,"- trigger_relay : ""Trigger: Relay"""
+Point,  Properties: 
+Point,"- trigger_counter : ""Trigger: Counter"""
+Point,"  Properties: spawnflags(flags) = [ 1: ""No Message"" : 0"
+Point,"- misc_noisemaker : ""Debug entity: continuously plays enforcer sounds"""
+Point,  Properties: 
+Point,"- viewthing : ""Debug entity: fake player model"""
+Point,  Properties: 
+
+Base,- Angle
+Base,"  Properties: angle(integer) : ""Direction"""
+Base,- Appearflags
+Base,"  Properties: spawnflags(Flags) =
+	[
+		256 : ""Not on Easy"" : 0
+		512 : ""Not on Normal"" : 0
+		1024 : ""Not on Hard"" : 0
+		2048 : ""Not in Deathmatch"" : 0"
+Base,- Targetname
+Base,"  Properties: targetname(target_source) : ""Name"""
+Base,- Target
+Base,"  Properties: target(target_destination) : ""Target""
+	killtarget(target_destination) : ""Killtarget"""
+Base,- PlayerClass
+Base,  Properties: 
+Base,- Item
+Base,"  Properties: message(string) : ""Message""
+	target(string) : ""Target""
+	killtarget(string) : ""Killtarget""
+	delay(integer) : ""Delay"""
+Base,- Ammo
+Base,"  Properties: spawnflags(flags) =
+	[
+		1 : ""Large box"" : 0"
+Base,- Weapon
+Base,  Properties: 
+Base,- Monster
+Base,"  Properties: spawnflags(Flags) =
+	[
+		1 : ""Ambush"" : 0"
+Base,- Light
+Base,"  Properties: light(integer) : ""Brightness"" : 300
+	wait(integer) : ""Fade distance multiplier"" : 1
+	delay(choices) : ""Attenuation"" =
+	[
+		0 : ""Linear falloff (Default)""
+		1 : ""Inverse distance falloff""
+		2 : ""Inverse distance squared""
+		3 : ""No falloff""
+		4 : ""Local minlight""
+		5 : ""Inverse distance squared B"""
+Base,- Trigger
+Base,"  Properties: sounds(choices) : ""Sound style"" : 0 =
+	[
+		0 : ""None""
+		1 : ""Secret sound""
+		2 : ""Beep beep""
+		3 : ""Large switch"""
+
+Entity Counts
+Solid Count,48
+Point Count,150
+Base Count,22

@@ -55,11 +55,18 @@ def get_unique_file_name(base_name):
         counter += 1
     return file_name
 
+
 def write_details_to_csv(solid_details, point_details, base_details, detail_file):
     detail_file = get_unique_file_name(detail_file)
     try:
         with open(detail_file, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
+
+            # Write entity counts at the beginning
+            writer.writerow([
+                                f"Solid Classes: {len(solid_details)}, Point Classes: {len(point_details)}, Base Classes: {len(base_details)}"])
+            writer.writerow([])  # Add a blank line after the counts
+
             writer.writerow(['ClassType', 'Details'])
             for detail in solid_details:
                 writer.writerow(['Solid', detail])
@@ -69,9 +76,15 @@ def write_details_to_csv(solid_details, point_details, base_details, detail_file
             writer.writerow([])  # Add a blank line after the last Point entry
             for detail in base_details:
                 writer.writerow(['Base', detail])
+            writer.writerow([])  # Add a blank line after the last Base entry
+
         print(f"Details CSV file has been created at {detail_file}")
+        print(f"Solid Count: {len(solid_details)}")
+        print(f"Point Count: {len(point_details)}")
+        print(f"Base Count: {len(base_details)}")
     except IOError as e:
         print(f"IO error: {e}")
+
 
 if __name__ == "__main__":
     current_directory = os.path.dirname(os.path.abspath(__file__))

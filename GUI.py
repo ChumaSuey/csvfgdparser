@@ -18,6 +18,7 @@ def apply_theme_to_titlebar(root):
         # A hacky way to update the title bar's color on Windows 10 (it doesn't update instantly like on Windows 11)
         root.wm_attributes("-alpha", 0.99)
         root.wm_attributes("-alpha", 1)
+
 class FGDApp:
     def __init__(self, root):
         self.root = root
@@ -79,25 +80,36 @@ class FGDApp:
         frame = ttk.Frame(window)
         frame.pack(fill=tk.BOTH, expand=True)
 
-        canvas = tk.Canvas(frame)
-        scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=canvas.yview)
-        scrollable_frame = ttk.Frame(canvas)
+        search_frame = ttk.Frame(frame)
+        search_frame.pack(fill=tk.X, padx=10, pady=5)
 
-        scrollable_frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(
-                scrollregion=canvas.bbox("all")
-            )
-        )
+        search_label = ttk.Label(search_frame, text="Search:")
+        search_label.pack(side=tk.LEFT, padx=5)
 
-        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
-        canvas.configure(yscrollcommand=scrollbar.set)
+        search_entry = ttk.Entry(search_frame)
+        search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=5)
 
-        label = ttk.Label(scrollable_frame, text=content, wraplength=400)
-        label.pack(padx=10, pady=10)
+        search_button = ttk.Button(search_frame, text="Search",
+                                   command=lambda: self.search_entity(search_entry.get(), content, result_label))
+        search_button.pack(side=tk.LEFT, padx=5)
 
-        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        text_frame = ttk.Frame(frame)
+        text_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        scrollbar = ttk.Scrollbar(text_frame)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        result_label = tk.Text(text_frame, wrap=tk.WORD, yscrollcommand=scrollbar.set, font=("Segoe UI", 10))
+        result_label.insert(tk.END, content)
+        result_label.config(state=tk.DISABLED)
+        result_label.pack(fill=tk.BOTH, expand=True)
+
+        scrollbar.config(command=result_label.yview)
+
+    def search_entity(self, query, content, result_label):
+        lines = content.split('\n')
+        filtered_lines = [line for line in lines if query.lower() in line.lower()]
+        result_label.config(text="\n".join(filtered_lines))
 
 if __name__ == "__main__":
     root = tk.Tk()
