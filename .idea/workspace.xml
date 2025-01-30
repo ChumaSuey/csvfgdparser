@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="Entity count bug solved">
-      <change beforePath="$PROJECT_DIR$/.idea/FGDcsvparser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FGDcsvparser.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="Count added, Segoe Ui font added... CSV in counter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,13 +91,22 @@
       <option name="project" value="LOCAL" />
       <updated>1737756217325</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Count added, Segoe Ui font added... CSV in counter">
+      <option name="closed" value="true" />
+      <created>1738074038007</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1738074038007</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="." />
     <MESSAGE value="..." />
     <MESSAGE value="Entity count bug solved" />
-    <option name="LAST_COMMIT_MESSAGE" value="Entity count bug solved" />
+    <MESSAGE value="Count added, Segoe Ui font added... CSV in counter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Count added, Segoe Ui font added... CSV in counter" />
   </component>
 </project>
