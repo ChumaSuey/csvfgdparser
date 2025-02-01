@@ -4,6 +4,7 @@ import backend
 import sv_ttk
 import darkdetect
 import ctypes
+import re
 
 class FGDApp:
     def __init__(self, root):
@@ -137,13 +138,35 @@ class FGDApp:
 
         scrollbar.config(command=result_label.yview)
 
-    def search_entity(self, query, content, result_label):
+        # Add dropdowns for entities with spawnflags
         lines = content.split('\n')
-        filtered_lines = [line for line in lines if query.lower() in line.lower()]
-        result_label.config(state=tk.NORMAL)
-        result_label.delete(1.0, tk.END)
-        result_label.insert(tk.END, "\n".join(filtered_lines))
-        result_label.config(state=tk.DISABLED)
+        multiline_spawnflags = ""
+        for line in lines:
+            if "spawnflags" in line:
+                multiline_spawnflags = line
+            elif multiline_spawnflags:
+                multiline_spawnflags += line
+                if "]" in line:
+                    start = multiline_spawnflags.find("[") + 1
+                    end = multiline_spawnflags.find("]")
+                    spawnflags = multiline_spawnflags[start:end].strip()
+                    entity_name = multiline_spawnflags.split(":")[0].strip()
+                    spawnflags_options = [flag.split(":")[1].strip() for flag in spawnflags.split("\n") if ":" in flag]
+
+                    dropdown_label = ttk.Label(frame, text=f"{entity_name} spawnflags:")
+                    dropdown_label.pack(pady=5)
+
+                    dropdown = ttk.Combobox(frame, values=spawnflags_options)
+                    dropdown.pack(pady=5)
+                    multiline_spawnflags = ""
+                    # Print the closing bracket
+                    result_label.config(state=tk.NORMAL)
+                    result_label.insert(tk.END, "]\n")
+                    result_label.config(state=tk.DISABLED)
+            else:
+                result_label.config(state=tk.NORMAL)
+                result_label.insert(tk.END, line + "\n")
+                result_label.config(state=tk.DISABLED)
 
 if __name__ == "__main__":
     root = tk.Tk()

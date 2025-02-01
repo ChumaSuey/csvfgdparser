@@ -2,8 +2,6 @@ import csv
 import os
 import re
 
-import re
-
 def parse_fgd(file_path):
     solid_details = []
     point_details = []
@@ -55,7 +53,6 @@ def get_unique_file_name(base_name):
         counter += 1
     return file_name
 
-
 def write_details_to_csv(solid_details, point_details, base_details, detail_file):
     detail_file = get_unique_file_name(detail_file)
     try:
@@ -84,7 +81,6 @@ def write_details_to_csv(solid_details, point_details, base_details, detail_file
         print(f"Base Count: {len(base_details)}")
     except IOError as e:
         print(f"IO error: {e}")
-
 
 if __name__ == "__main__":
     current_directory = os.path.dirname(os.path.abspath(__file__))
