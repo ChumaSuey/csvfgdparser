@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, filedialog, font
+from tkinter import ttk, filedialog, font, messagebox
 import backend
 import sv_ttk
 import darkdetect
@@ -14,7 +14,7 @@ class FGDApp:
         self.root = root
         sv_ttk.set_theme("dark" if darkdetect.isDark() else "light")
         self.root.title("FGD to CSV Converter")
-        self.root.geometry(f"{int(700 * scaleFactor)}x{int(400 * scaleFactor)}")
+        self.root.geometry(f"{int(750 * scaleFactor)}x{int(500 * scaleFactor)}")
 
         # Define custom font
         custom_font = font.Font(family="Segoe UI", size=12)
@@ -75,11 +75,17 @@ class FGDApp:
             self.file_path_entry.insert(0, file_path)
             self.current_file_label.config(text=f"Current file: {file_path}")
 
+    from tkinter import messagebox
+
     def create_csv(self):
         file_path = self.file_path_entry.get()
         if file_path:
             solid_details, point_details, base_details = backend.parse_fgd(file_path)
-            backend.write_details_to_csv(solid_details, point_details, base_details, "details.csv")
+            detail_file = "details.csv"
+            backend.write_details_to_csv(solid_details, point_details, base_details, detail_file)
+            messagebox.showinfo("Success", f"CSV file has been created as: {detail_file}")
+        else:
+            messagebox.showwarning("Warning", "No file selected. Please select a file to create CSV.")
 
     def visualize_data(self):
         file_path = self.file_path_entry.get()

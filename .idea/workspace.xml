@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="Count added, Segoe Ui font added... CSV in counter">
+    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="GUI functions added!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI.py" afterDir="false" />
     </list>
@@ -99,7 +99,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738074038007</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="GUI functions added!">
+      <option name="closed" value="true" />
+      <created>1738247071736</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1738247071736</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -107,6 +115,7 @@
     <MESSAGE value="..." />
     <MESSAGE value="Entity count bug solved" />
     <MESSAGE value="Count added, Segoe Ui font added... CSV in counter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Count added, Segoe Ui font added... CSV in counter" />
+    <MESSAGE value="GUI functions added!" />
+    <option name="LAST_COMMIT_MESSAGE" value="GUI functions added!" />
   </component>
 </project>
