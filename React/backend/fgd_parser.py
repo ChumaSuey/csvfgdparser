@@ -16,7 +16,7 @@ def parse_fgd(file_path: str) -> Tuple[List[str], List[str], List[str]]:
     )
     # Improved baseclass regex: matches with or without base(...) and with or without description
     base_re = re.compile(
-        r'^@(?:BaseClass|baseclass)(?:\s+base\([^)]+\))*\s*=\s*([^\s:]+)(?:\s*:\s*"([^"]*)")?',
+        r'^@(?:BaseClass|baseclass)(?:\s+\w+\([^)]+\))*\s*=\s*([^\s:]+)(?:\s*:\s*"([^"]*)")?',
         re.IGNORECASE
     )
 
