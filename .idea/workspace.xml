@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="Quake fgd file inside react folder" />
+    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="fgd_parser fixed, detects all Solid, Point and base classes!">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -150,7 +152,23 @@
       <option name="project" value="LOCAL" />
       <updated>1751224868106</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fgd_parser added to git">
+      <option name="closed" value="true" />
+      <created>1751225051124</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1751225051124</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fgd_parser fixed, detects all Solid, Point and base classes!">
+      <option name="closed" value="true" />
+      <created>1751237882430</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1751237882430</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -174,6 +192,8 @@
     <MESSAGE value="React first push" />
     <MESSAGE value="Early dev second push" />
     <MESSAGE value="Quake fgd file inside react folder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Quake fgd file inside react folder" />
+    <MESSAGE value="fgd_parser added to git" />
+    <MESSAGE value="fgd_parser fixed, detects all Solid, Point and base classes!" />
+    <option name="LAST_COMMIT_MESSAGE" value="fgd_parser fixed, detects all Solid, Point and base classes!" />
   </component>
 </project>
