@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="Updated package json and other updates">
+    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="main.js added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/Core/core.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/React/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/React/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/frontend/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/frontend/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/React/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/React/frontend/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -179,7 +178,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751298746657</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="main.js added">
+      <option name="closed" value="true" />
+      <created>1751298847833</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1751298847834</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -206,6 +213,7 @@
     <MESSAGE value="fgd_parser added to git" />
     <MESSAGE value="fgd_parser fixed, detects all Solid, Point and base classes!" />
     <MESSAGE value="Updated package json and other updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated package json and other updates" />
+    <MESSAGE value="main.js added" />
+    <option name="LAST_COMMIT_MESSAGE" value="main.js added" />
   </component>
 </project>

@@ -4,7 +4,7 @@ const path = require('path');
 
 let backendProcess;
 
-function createWindow () {
+function createWindow() {
   const win = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -14,22 +14,25 @@ function createWindow () {
     }
   });
 
-  // For development, use localhost:3000
-  // win.loadURL('http://localhost:3000');
-
   // For production, use the built React app
   win.loadFile(path.join(__dirname, 'build', 'index.html'));
 }
 
 app.whenReady().then(() => {
-  // Start the Python backend (adjust the path if needed)
+  // Start the Python backend (show output for debugging)
   backendProcess = spawn('python', [path.join(__dirname, '..', 'backend', 'app.py')], {
-    shell: true,
-    detached: true,
-    stdio: 'ignore'
+    shell: true
   });
 
-  createWindow();
+  backendProcess.stdout && backendProcess.stdout.on('data', data => {
+    console.log(`[Backend] ${data}`);
+  });
+  backendProcess.stderr && backendProcess.stderr.on('data', data => {
+    console.error(`[Backend ERROR] ${data}`);
+  });
+
+  // Wait a bit to let backend start, then create the window
+  setTimeout(createWindow, 1500);
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();

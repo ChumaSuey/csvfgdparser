@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "main": "main.js",
+  "author": "Chuma / AQ",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -24,6 +26,7 @@
   },
   "build": {
     "appId": "com.yourdomain.fgdparser",
+    "productName": "FGD CSV Parser",
     "files": [
       "build/**/*",
       "main.js",
