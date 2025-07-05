@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
-import axios from 'axios';
 import FileUpload from './components/FileUpload';
 import VisualizerOptions from './components/VisualizerOptions';
+import { parseFGD } from './components/fgd_parser';
+import { writeDetailsToCSV } from './components/csv_writer';
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -12,48 +13,56 @@ function App() {
   const [baseEntities, setBaseEntities] = useState([]);
   const [csvUrl, setCsvUrl] = useState(null);
 
-  const handleVisualize = async () => {
+  const handleVisualize = () => {
     if (!selectedFile) {
       alert('Please select an FGD file first.');
       return;
     }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target.result;
+      const { solid, point, base } = parseFGD(text);
 
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('classType', classType);
-
-    try {
-      const response = await axios.post('http://localhost:5000/api/visualize', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      setSolidEntities(response.data.solid || []);
-      setPointEntities(response.data.point || []);
-      setBaseEntities(response.data.base || []);
-    } catch (error) {
-      alert('Error: ' + error.message);
-    }
+      // Filter by classType if needed
+      setSolidEntities(classType === 'All' || classType === 'Solid' ? solid : []);
+      setPointEntities(classType === 'All' || classType === 'Point' ? point : []);
+      setBaseEntities(classType === 'All' || classType === 'Base' ? base : []);
+      setCsvUrl(null); // Reset CSV link on new visualize
+    };
+    reader.onerror = () => alert('Failed to read file.');
+    reader.readAsText(selectedFile, 'utf-8');
   };
 
-  const handleCreateCSV = async () => {
-    if (!selectedFile) {
-      alert('Please select an FGD file first.');
+  const handleCreateCSV = () => {
+    // Combine all entities for CSV
+    let data = [];
+    let fieldnames = ['Entity', 'Description'];
+    if (solidEntities.length > 0) {
+      data = data.concat(solidEntities.map(e => {
+        const [entity, ...desc] = e.split(' : ');
+        return { Entity: entity, Description: desc.join(' : ') };
+      }));
+    }
+    if (pointEntities.length > 0) {
+      data = data.concat(pointEntities.map(e => {
+        const [entity, ...desc] = e.split(' : ');
+        return { Entity: entity, Description: desc.join(' : ') };
+      }));
+    }
+    if (baseEntities.length > 0) {
+      data = data.concat(baseEntities.map(e => {
+        const [entity, ...desc] = e.split(' : ');
+        return { Entity: entity, Description: desc.join(' : ') };
+      }));
+    }
+    if (data.length === 0) {
+      alert('No entities to export. Please visualize data first.');
       return;
     }
-
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('classType', classType);
-
-    try {
-      const response = await axios.post('http://localhost:5000/api/create-csv', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        responseType: 'blob',
-      });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      setCsvUrl(url);
-    } catch (error) {
-      alert('Error: ' + error.message);
-    }
+    const csvString = writeDetailsToCSV(data, fieldnames);
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const url = window.URL.createObjectURL(blob);
+    setCsvUrl(url);
   };
 
   return (
@@ -62,11 +71,11 @@ function App() {
         <h1>FGD Entity Viewer</h1>
         <div style={{ margin: '20px 0' }}>
           <FileUpload onFileSelected={setSelectedFile} />
-            {selectedFile && (
-    <div style={{ marginTop: 10, color: '#ccc' }}>
-      Selected file: <strong>{selectedFile.name}</strong>
-    </div>
-  )}
+          {selectedFile && (
+            <div style={{ marginTop: 10, color: '#ccc' }}>
+              Selected file: <strong>{selectedFile.name}</strong>
+            </div>
+          )}
         </div>
         <VisualizerOptions value={classType} onChange={setClassType} />
         <div style={{ margin: '20px 0' }}>
