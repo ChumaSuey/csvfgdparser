@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Import useEffect
 import './App.css';
 import FileUpload from './components/FileUpload';
 import VisualizerOptions from './components/VisualizerOptions';
 import { parseFGD } from './components/fgd_parser';
 import { writeDetailsToCSV } from './components/csv_writer';
+import { searchEntities } from './components/utils'; // Assuming searcher.js is where searchEntities is
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -12,6 +13,18 @@ function App() {
   const [pointEntities, setPointEntities] = useState([]);
   const [baseEntities, setBaseEntities] = useState([]);
   const [csvUrl, setCsvUrl] = useState(null);
+
+  // New state for search functionality
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredSolidEntities, setFilteredSolidEntities] = useState([]);
+  const [filteredPointEntities, setFilteredPointEntities] = useState([]);
+  const [filteredBaseEntities, setFilteredBaseEntities] = useState([]);
+
+  // Use a ref to store the original parsed entities to search against
+  // This prevents re-parsing the file every time the search term changes
+  const [originalSolidEntities, setOriginalSolidEntities] = useState([]);
+  const [originalPointEntities, setOriginalPointEntities] = useState([]);
+  const [originalBaseEntities, setOriginalBaseEntities] = useState([]);
 
   const handleVisualize = () => {
     if (!selectedFile) {
@@ -23,40 +36,77 @@ function App() {
       const text = event.target.result;
       const { solid, point, base } = parseFGD(text);
 
-      // Filter by classType if needed
+      // Store original parsed entities
+      setOriginalSolidEntities(solid);
+      setOriginalPointEntities(point);
+      setOriginalBaseEntities(base);
+
+      // Set initial displayed entities based on classType
       setSolidEntities(classType === 'All' || classType === 'Solid' ? solid : []);
       setPointEntities(classType === 'All' || classType === 'Point' ? point : []);
       setBaseEntities(classType === 'All' || classType === 'Base' ? base : []);
+
+      // Clear search term and filtered results on new visualization
+      setSearchTerm('');
+      setFilteredSolidEntities([]);
+      setFilteredPointEntities([]);
+      setFilteredBaseEntities([]);
       setCsvUrl(null); // Reset CSV link on new visualize
     };
     reader.onerror = () => alert('Failed to read file.');
     reader.readAsText(selectedFile, 'utf-8');
   };
 
+  // Effect to handle filtering when entities or classType or searchTerm changes
+  useEffect(() => {
+    const applyFiltersAndSearch = () => {
+      let currentSolid = originalSolidEntities;
+      let currentPoint = originalPointEntities;
+      let currentBase = originalBaseEntities;
+
+      // Apply class type filter first
+      if (classType !== 'All') {
+        currentSolid = classType === 'Solid' ? originalSolidEntities : [];
+        currentPoint = classType === 'Point' ? originalPointEntities : [];
+        currentBase = classType === 'Base' ? originalBaseEntities : [];
+      }
+
+      // Apply search filter if search term exists
+      if (searchTerm) {
+        const { solid, point, base } = searchEntities(searchTerm, currentSolid, currentPoint, currentBase);
+        setFilteredSolidEntities(solid);
+        setFilteredPointEntities(point);
+        setFilteredBaseEntities(base);
+      } else {
+        // If no search term, display the currently class-filtered entities
+        setFilteredSolidEntities(currentSolid);
+        setFilteredPointEntities(currentPoint);
+        setFilteredBaseEntities(currentBase);
+      }
+    };
+
+    applyFiltersAndSearch();
+  }, [searchTerm, classType, originalSolidEntities, originalPointEntities, originalBaseEntities]);
+
+
   const handleCreateCSV = () => {
-    // Combine all entities for CSV
+    // Combine filtered entities for CSV if search is active, otherwise original/class-filtered
     let data = [];
     let fieldnames = ['Entity', 'Description'];
-    if (solidEntities.length > 0) {
-      data = data.concat(solidEntities.map(e => {
+
+    const entitiesToExport = searchTerm ?
+      [...filteredSolidEntities, ...filteredPointEntities, ...filteredBaseEntities] :
+      [...solidEntities, ...pointEntities, ...baseEntities]; // Use the currently displayed entities
+
+    if (entitiesToExport.length > 0) {
+      data = entitiesToExport.map(e => {
         const [entity, ...desc] = e.split(' : ');
         return { Entity: entity, Description: desc.join(' : ') };
-      }));
+      });
     }
-    if (pointEntities.length > 0) {
-      data = data.concat(pointEntities.map(e => {
-        const [entity, ...desc] = e.split(' : ');
-        return { Entity: entity, Description: desc.join(' : ') };
-      }));
-    }
-    if (baseEntities.length > 0) {
-      data = data.concat(baseEntities.map(e => {
-        const [entity, ...desc] = e.split(' : ');
-        return { Entity: entity, Description: desc.join(' : ') };
-      }));
-    }
+
     if (data.length === 0) {
-      alert('No entities to export. Please visualize data first.');
+      alert('No entities to export. Please visualize data first or adjust filters/search.');
       return;
     }
     const csvString = writeDetailsToCSV(data, fieldnames);
@@ -86,42 +136,66 @@ function App() {
             Create CSV
           </button>
         </div>
+
+        {/* Search Input Field */}
+        <div style={{ margin: '20px 0', width: '100%', maxWidth: 600 }}>
+          <input
+            type="text"
+            placeholder="Search entities..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '10px',
+              borderRadius: '5px',
+              border: '1px solid #555',
+              background: '#333',
+              color: '#fff',
+              fontSize: '1rem',
+            }}
+          />
+        </div>
+
         <div style={{ marginTop: 30, width: '100%', maxWidth: 600 }}>
           <p>
             <strong>Note:</strong> The Entity counter is an approximation.
           </p>
-          {/* Solid Entities */}
-          {solidEntities.length > 0 && (
+          {/* Display Filtered Solid Entities */}
+          {filteredSolidEntities.length > 0 && (
             <div style={{ maxHeight: 200, overflowY: 'auto', background: '#222', color: '#fff', padding: 10, borderRadius: 8, marginBottom: 20 }}>
-              <h3>Solid Entities ({solidEntities.length})</h3>
+              <h3>Solid Entities ({filteredSolidEntities.length})</h3>
               <ul>
-                {solidEntities.map((entity, idx) => (
+                {filteredSolidEntities.map((entity, idx) => (
                   <li key={idx}>{entity}</li>
                 ))}
               </ul>
             </div>
           )}
-          {/* Point Entities */}
-          {pointEntities.length > 0 && (
+          {/* Display Filtered Point Entities */}
+          {filteredPointEntities.length > 0 && (
             <div style={{ maxHeight: 200, overflowY: 'auto', background: '#223', color: '#fff', padding: 10, borderRadius: 8, marginBottom: 20 }}>
-              <h3>Point Entities ({pointEntities.length})</h3>
+              <h3>Point Entities ({filteredPointEntities.length})</h3>
               <ul>
-                {pointEntities.map((entity, idx) => (
+                {filteredPointEntities.map((entity, idx) => (
                   <li key={idx}>{entity}</li>
                 ))}
               </ul>
             </div>
           )}
-          {/* Base Entities */}
-          {baseEntities.length > 0 && (
+          {/* Display Filtered Base Entities */}
+          {filteredBaseEntities.length > 0 && (
             <div style={{ maxHeight: 200, overflowY: 'auto', background: '#224', color: '#fff', padding: 10, borderRadius: 8 }}>
-              <h3>Base Entities ({baseEntities.length})</h3>
+              <h3>Base Entities ({filteredBaseEntities.length})</h3>
               <ul>
-                {baseEntities.map((entity, idx) => (
+                {filteredBaseEntities.map((entity, idx) => (
                   <li key={idx}>{entity}</li>
                 ))}
               </ul>
             </div>
+          )}
+          {/* Message when no entities match search/filter */}
+          {(searchTerm && filteredSolidEntities.length === 0 && filteredPointEntities.length === 0 && filteredBaseEntities.length === 0) && (
+            <p style={{ color: '#aaa' }}>No entities match your search criteria.</p>
           )}
           {/* CSV download link */}
           {csvUrl && (
