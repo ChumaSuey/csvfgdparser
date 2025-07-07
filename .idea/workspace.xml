@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="Search entity bar added" />
+    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="- CSV Downloader works properly when pressing a button.&#10;- Reset button added to clean a previous use of an FGD.">
+      <change afterPath="$PROJECT_DIR$/React/frontend/src/components/BaseEntity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,9 +21,22 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="ReactV3.0" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ReactV1.0" />
+        <entry key="$PROJECT_DIR$" value="ReactV2.0" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -34,18 +50,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.GUI.executor&quot;: &quot;Run&quot;,
-    &quot;Python.backend.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ReactV2.0&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/luism/PycharmProjects/FGDcsvparser/FGDcsvparser/React&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.GUI.executor": "Run",
+    "Python.backend.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "ReactV3.0",
+    "last_opened_file_path": "C:/Users/luism/PycharmProjects/FGDcsvparser/FGDcsvparser/React",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\luism\PycharmProjects\FGDcsvparser\FGDcsvparser\React" />
@@ -214,7 +230,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751730292807</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="- CSV Downloader works properly when pressing a button.&#10;- Reset button added to clean a previous use of an FGD.">
+      <option name="closed" value="true" />
+      <created>1751910350360</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1751910350360</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -246,6 +270,7 @@
     <MESSAGE value="Full react no flask implementation" />
     <MESSAGE value="Full react no flask implementation micro update" />
     <MESSAGE value="Search entity bar added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Search entity bar added" />
+    <MESSAGE value="- CSV Downloader works properly when pressing a button.&#10;- Reset button added to clean a previous use of an FGD." />
+    <option name="LAST_COMMIT_MESSAGE" value="- CSV Downloader works properly when pressing a button.&#10;- Reset button added to clean a previous use of an FGD." />
   </component>
 </project>

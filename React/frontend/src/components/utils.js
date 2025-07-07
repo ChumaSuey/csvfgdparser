@@ -11,6 +11,9 @@ export function searchEntities(query, solidEntities, pointEntities, baseEntities
   return {
     solid: solidEntities.filter(e => String(e).toLowerCase().includes(lowerQuery)),
     point: pointEntities.filter(e => String(e).toLowerCase().includes(lowerQuery)),
-    base: baseEntities.filter(e => String(e).toLowerCase().includes(lowerQuery)),
+    base: baseEntities.filter(e => {
+      const searchableString = `${e.name} ${e.description} ${e.properties.join(' ')}`.toLowerCase();
+      return searchableString.includes(lowerQuery);
+    }),
   };
 }

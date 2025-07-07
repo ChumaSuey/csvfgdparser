@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'; // Import useEffect
 import './App.css';
 import VisualizerOptions from './components/VisualizerOptions';
 import CSVDownloader from './components/csv_downloader';
-import { parseFGD } from './components/fgd_parser';
-import { searchEntities } from './components/utils'; // Assuming searcher.js is where searchEntities is
+import FGDParser from './components/fgd_parser'; // Correct: FGDParser is the default export
+import { searchEntities } from './components/utils';
+import BaseEntity from './components/BaseEntity'; // Import the new component
 
 function App() {
-  const [selectedFile, setSelectedFile] = useState(null);
   const [classType, setClassType] = useState('All');
-  const [fileInputKey, setFileInputKey] = useState(Date.now()); // For resetting the file input
+  const [parserKey, setParserKey] = useState(Date.now()); // For resetting the FGDParser component
 
   // New state for search functionality
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,33 +31,13 @@ function App() {
     setSearchTerm('');
   };
 
-  // Clears old data when a new file is selected, preventing confusion
-  const handleFileSelection = (file) => {
-    if (file) {
-      setSelectedFile(file);
-      clearDataState();
-    }
-  };
-
-  const handleVisualize = () => {
-    if (!selectedFile) {
-      alert('Please select an FGD file first.');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const text = event.target.result;
-      const { solid, point, base } = parseFGD(text);
-
-      // Store original parsed entities
-      setOriginalSolidEntities(solid);
-      setOriginalPointEntities(point);
-      setOriginalBaseEntities(base);
-
-      // The useEffect will now populate the filtered entities based on the new original data
-    };
-    reader.onerror = () => alert('Failed to read file.');
-    reader.readAsText(selectedFile, 'utf-8');
+  // Callback for when the FGDParser component has parsed a file
+  const handleParsedData = ({ solid, point, base }) => {
+    clearDataState(); // Clear previous data before setting new data
+    // Store original parsed entities
+    setOriginalSolidEntities(solid);
+    setOriginalPointEntities(point);
+    setOriginalBaseEntities(base);
   };
 
   // Effect to handle filtering when entities or classType or searchTerm changes
@@ -94,17 +74,24 @@ function App() {
   // Prepare data for CSV export based on the current filtered view
   const entitiesToExport = [...filteredSolidEntities, ...filteredPointEntities, ...filteredBaseEntities];
   const dataForCSV = entitiesToExport.map(e => {
-    const [entity, ...desc] = e.split(' : ');
-    return { Entity: entity, Description: desc.join(' : ') };
+    if (typeof e === 'string') {
+      const [entity, ...desc] = e.split(' : ');
+      return { Entity: entity, Description: desc.join(' : '), Properties: '' };
+    } else { // It's a base entity object
+      return {
+        Entity: e.name,
+        Description: e.description,
+        Properties: e.properties.join('; ') // Join properties with a semicolon
+      };
+    }
   });
-  const csvFieldnames = ['Entity', 'Description'];
+  const csvFieldnames = ['Entity', 'Description', 'Properties'];
 
   // Full reset for the application state
   const handleReset = () => {
-    setSelectedFile(null);
     setClassType('All');
     clearDataState();
-    setFileInputKey(Date.now()); // Reset the file input component by changing its key
+    setParserKey(Date.now()); // Reset the FGDParser component by changing its key
   };
 
 
@@ -112,28 +99,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>FGD Entity Viewer</h1>
-        <div style={{ margin: '20px 0' }}>
-          {/* We hide the default file input and use a styled label to trigger it. */}
-          <input
-            type="file"
-            id="file-upload-input"
-            key={fileInputKey}
-            onChange={(e) => handleFileSelection(e.target.files[0])}
-            style={{ display: 'none' }}
-            accept=".fgd"
-          />
-          <label htmlFor="file-upload-input" className="file-upload-label">
-            Choose FGD File
-          </label>
-          <span style={{ marginLeft: 10, color: '#ccc', fontStyle: 'italic' }}>
-            {selectedFile ? selectedFile.name : 'No file chosen'}
-          </span>
-        </div>
+        {/* The FGDParser component now handles file selection and parsing */}
+        <FGDParser key={parserKey} onParsed={handleParsedData} />
         <VisualizerOptions value={classType} onChange={setClassType} />
         <div style={{ margin: '20px 0' }}>
-          <button onClick={handleVisualize} style={{ marginRight: 10 }}>
-            Visualize Data
-          </button>
           <CSVDownloader
             data={dataForCSV}
             fieldnames={csvFieldnames}
@@ -194,12 +163,13 @@ function App() {
             <div style={{ maxHeight: 200, overflowY: 'auto', background: '#224', color: '#fff', padding: 10, borderRadius: 8 }}>
               <h3>Base Entities ({filteredBaseEntities.length})</h3>
               <ul>
-                {filteredBaseEntities.map((entity, idx) => (
-                  <li key={idx}>{entity}</li>
+                {filteredBaseEntities.map((entity, index) => (
+                  <BaseEntity key={`${entity.name}-${index}`} entity={entity} />
                 ))}
               </ul>
             </div>
           )}
+
           {/* Message when no entities match search/filter */}
           {(searchTerm && filteredSolidEntities.length === 0 && filteredPointEntities.length === 0 && filteredBaseEntities.length === 0) && (
             <p style={{ color: '#aaa' }}>No entities match your search criteria.</p>
