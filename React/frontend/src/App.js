@@ -138,7 +138,7 @@ function App() {
           </p>
           {/* Display Filtered Solid Entities */}
           {filteredSolidEntities.length > 0 && (
-            <div style={{ maxHeight: 200, overflowY: 'auto', background: '#222', color: '#fff', padding: 10, borderRadius: 8, marginBottom: 20 }}>
+            <div style={{ maxHeight: 400, overflowY: 'auto', background: '#222', color: '#fff', padding: 10, borderRadius: 8, marginBottom: 20 }}>
               <h3>Solid Entities ({filteredSolidEntities.length})</h3>
               <ul>
                 {filteredSolidEntities.map((entity, idx) => (
@@ -149,7 +149,7 @@ function App() {
           )}
           {/* Display Filtered Point Entities */}
           {filteredPointEntities.length > 0 && (
-            <div style={{ maxHeight: 200, overflowY: 'auto', background: '#223', color: '#fff', padding: 10, borderRadius: 8, marginBottom: 20 }}>
+            <div style={{ maxHeight: 400, overflowY: 'auto', background: '#223', color: '#fff', padding: 10, borderRadius: 8, marginBottom: 20 }}>
               <h3>Point Entities ({filteredPointEntities.length})</h3>
               <ul>
                 {filteredPointEntities.map((entity, idx) => (
@@ -160,7 +160,7 @@ function App() {
           )}
           {/* Display Filtered Base Entities */}
           {filteredBaseEntities.length > 0 && (
-            <div style={{ maxHeight: 200, overflowY: 'auto', background: '#224', color: '#fff', padding: 10, borderRadius: 8 }}>
+            <div style={{ maxHeight: 400, overflowY: 'auto', background: '#224', color: '#fff', padding: 10, borderRadius: 8 }}>
               <h3>Base Entities ({filteredBaseEntities.length})</h3>
               <ul>
                 {filteredBaseEntities.map((entity, index) => (
