@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="Full react no flask implementation micro update" />
+    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="Search entity bar added" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -206,7 +206,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751698558766</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Search entity bar added">
+      <option name="closed" value="true" />
+      <created>1751730292807</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1751730292807</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -237,6 +245,7 @@
     <MESSAGE value="Small main.js update" />
     <MESSAGE value="Full react no flask implementation" />
     <MESSAGE value="Full react no flask implementation micro update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Full react no flask implementation micro update" />
+    <MESSAGE value="Search entity bar added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Search entity bar added" />
   </component>
 </project>

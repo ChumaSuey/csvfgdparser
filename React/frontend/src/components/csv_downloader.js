@@ -3,6 +3,10 @@ import { writeDetailsToCSV } from './csv_writer';
 
 function CSVDownloader({ data, fieldnames, filename = 'entities.csv' }) {
   const handleDownloadCSV = () => {
+    if (!data || data.length === 0) {
+      alert('No entities to export. Please visualize data first or adjust filters/search.');
+      return;
+    }
     const csvString = writeDetailsToCSV(data, fieldnames);
     const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);

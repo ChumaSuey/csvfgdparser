@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react'; // Import useEffect
 import './App.css';
-import FileUpload from './components/FileUpload';
 import VisualizerOptions from './components/VisualizerOptions';
+import CSVDownloader from './components/csv_downloader';
 import { parseFGD } from './components/fgd_parser';
-import { writeDetailsToCSV } from './components/csv_writer';
 import { searchEntities } from './components/utils'; // Assuming searcher.js is where searchEntities is
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [classType, setClassType] = useState('All');
-  const [solidEntities, setSolidEntities] = useState([]);
-  const [pointEntities, setPointEntities] = useState([]);
-  const [baseEntities, setBaseEntities] = useState([]);
-  const [csvUrl, setCsvUrl] = useState(null);
+  const [fileInputKey, setFileInputKey] = useState(Date.now()); // For resetting the file input
 
   // New state for search functionality
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,11 +16,28 @@ function App() {
   const [filteredPointEntities, setFilteredPointEntities] = useState([]);
   const [filteredBaseEntities, setFilteredBaseEntities] = useState([]);
 
-  // Use a ref to store the original parsed entities to search against
-  // This prevents re-parsing the file every time the search term changes
   const [originalSolidEntities, setOriginalSolidEntities] = useState([]);
   const [originalPointEntities, setOriginalPointEntities] = useState([]);
   const [originalBaseEntities, setOriginalBaseEntities] = useState([]);
+
+  // Helper to clear all entity and search data
+  const clearDataState = () => {
+    setOriginalSolidEntities([]);
+    setOriginalPointEntities([]);
+    setOriginalBaseEntities([]);
+    setFilteredSolidEntities([]);
+    setFilteredPointEntities([]);
+    setFilteredBaseEntities([]);
+    setSearchTerm('');
+  };
+
+  // Clears old data when a new file is selected, preventing confusion
+  const handleFileSelection = (file) => {
+    if (file) {
+      setSelectedFile(file);
+      clearDataState();
+    }
+  };
 
   const handleVisualize = () => {
     if (!selectedFile) {
@@ -41,17 +54,7 @@ function App() {
       setOriginalPointEntities(point);
       setOriginalBaseEntities(base);
 
-      // Set initial displayed entities based on classType
-      setSolidEntities(classType === 'All' || classType === 'Solid' ? solid : []);
-      setPointEntities(classType === 'All' || classType === 'Point' ? point : []);
-      setBaseEntities(classType === 'All' || classType === 'Base' ? base : []);
-
-      // Clear search term and filtered results on new visualization
-      setSearchTerm('');
-      setFilteredSolidEntities([]);
-      setFilteredPointEntities([]);
-      setFilteredBaseEntities([]);
-      setCsvUrl(null); // Reset CSV link on new visualize
+      // The useEffect will now populate the filtered entities based on the new original data
     };
     reader.onerror = () => alert('Failed to read file.');
     reader.readAsText(selectedFile, 'utf-8');
@@ -88,52 +91,56 @@ function App() {
     applyFiltersAndSearch();
   }, [searchTerm, classType, originalSolidEntities, originalPointEntities, originalBaseEntities]);
 
+  // Prepare data for CSV export based on the current filtered view
+  const entitiesToExport = [...filteredSolidEntities, ...filteredPointEntities, ...filteredBaseEntities];
+  const dataForCSV = entitiesToExport.map(e => {
+    const [entity, ...desc] = e.split(' : ');
+    return { Entity: entity, Description: desc.join(' : ') };
+  });
+  const csvFieldnames = ['Entity', 'Description'];
 
-  const handleCreateCSV = () => {
-    // Combine filtered entities for CSV if search is active, otherwise original/class-filtered
-    let data = [];
-    let fieldnames = ['Entity', 'Description'];
-
-    const entitiesToExport = searchTerm ?
-      [...filteredSolidEntities, ...filteredPointEntities, ...filteredBaseEntities] :
-      [...solidEntities, ...pointEntities, ...baseEntities]; // Use the currently displayed entities
-
-    if (entitiesToExport.length > 0) {
-      data = entitiesToExport.map(e => {
-        const [entity, ...desc] = e.split(' : ');
-        return { Entity: entity, Description: desc.join(' : ') };
-      });
-    }
-
-    if (data.length === 0) {
-      alert('No entities to export. Please visualize data first or adjust filters/search.');
-      return;
-    }
-    const csvString = writeDetailsToCSV(data, fieldnames);
-    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
-    const url = window.URL.createObjectURL(blob);
-    setCsvUrl(url);
+  // Full reset for the application state
+  const handleReset = () => {
+    setSelectedFile(null);
+    setClassType('All');
+    clearDataState();
+    setFileInputKey(Date.now()); // Reset the file input component by changing its key
   };
+
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>FGD Entity Viewer</h1>
         <div style={{ margin: '20px 0' }}>
-          <FileUpload onFileSelected={setSelectedFile} />
-          {selectedFile && (
-            <div style={{ marginTop: 10, color: '#ccc' }}>
-              Selected file: <strong>{selectedFile.name}</strong>
-            </div>
-          )}
+          {/* We hide the default file input and use a styled label to trigger it. */}
+          <input
+            type="file"
+            id="file-upload-input"
+            key={fileInputKey}
+            onChange={(e) => handleFileSelection(e.target.files[0])}
+            style={{ display: 'none' }}
+            accept=".fgd"
+          />
+          <label htmlFor="file-upload-input" className="file-upload-label">
+            Choose FGD File
+          </label>
+          <span style={{ marginLeft: 10, color: '#ccc', fontStyle: 'italic' }}>
+            {selectedFile ? selectedFile.name : 'No file chosen'}
+          </span>
         </div>
         <VisualizerOptions value={classType} onChange={setClassType} />
         <div style={{ margin: '20px 0' }}>
           <button onClick={handleVisualize} style={{ marginRight: 10 }}>
             Visualize Data
           </button>
-          <button onClick={handleCreateCSV}>
-            Create CSV
+          <CSVDownloader
+            data={dataForCSV}
+            fieldnames={csvFieldnames}
+            filename="entities.csv"
+          />
+          <button onClick={handleReset} style={{ marginLeft: 10 }}>
+            Reset
           </button>
         </div>
 
@@ -196,12 +203,6 @@ function App() {
           {/* Message when no entities match search/filter */}
           {(searchTerm && filteredSolidEntities.length === 0 && filteredPointEntities.length === 0 && filteredBaseEntities.length === 0) && (
             <p style={{ color: '#aaa' }}>No entities match your search criteria.</p>
-          )}
-          {/* CSV download link */}
-          {csvUrl && (
-            <div style={{ marginTop: 20 }}>
-              <a href={csvUrl} download="entities.csv">Download CSV</a>
-            </div>
           )}
         </div>
       </header>
