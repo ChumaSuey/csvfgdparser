@@ -4,7 +4,7 @@ import React, { useState } from 'react';
  * Parses the content of an FGD file and returns three lists: solid, point, base.
  * Handles multi-line entity definitions and most FGD formats.
  * @param {string} text - The content of the FGD file.
- * @returns {{solid: string[], point: string[], base: string[]}}
+ * @returns {{solid: Array<{name: string, description: string, properties: string[]}>, point: Array<{name: string, description: string, properties: string[]}>, base: Array<{name: string, description: string, properties: string[]}>}}
  */
 function parseFGD(text) {
   const solid = [];
@@ -19,9 +19,8 @@ function parseFGD(text) {
   const lines = text.split(/\r?\n/);
   let block = [];
 
-  // Modified regex to capture properties within base classes
+  // Modified regex to capture properties within base classes and entities
   const propertyRe = /(\w+)\(\s*(string|integer|float|choices)?\s*\)\s*:\s*"([^"]*)"/g;
-
 
   // Processes a block of lines to extract entity or base class information
   function processBlock(blockLines) {
@@ -30,7 +29,18 @@ function parseFGD(text) {
     let match = entityRe.exec(blockText);
     if (match) {
       const [, entityType, entityName, description] = match;
-      const entry = `${entityName} : ${description}`;
+      // Extract properties
+      const properties = [];
+      let propertyMatch;
+      while ((propertyMatch = propertyRe.exec(blockText)) !== null) {
+        const [, propertyName, propertyType, propertyDescription] = propertyMatch;
+        properties.push(`${propertyName}${propertyType ? ' (' + propertyType + ')' : ''}: ${propertyDescription}`);
+      }
+      const entry = {
+        name: entityName,
+        description: description,
+        properties: properties
+      };
       if (
         ["solidclass", "targetclass", "ammoclass", "weaponclass", "monsterclass"].includes(entityType.toLowerCase())
       ) {
@@ -59,7 +69,6 @@ function parseFGD(text) {
         };
 
         base.push(entry);
-
       }
     }
   }

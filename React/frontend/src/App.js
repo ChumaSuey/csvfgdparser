@@ -5,6 +5,29 @@ import CSVDownloader from './components/csv_downloader';
 import FGDParser from './components/fgd_parser'; // Correct: FGDParser is the default export
 import { searchEntities } from './components/utils';
 import BaseEntity from './components/BaseEntity'; // Import the new component
+// Reusable component for Solid/Point entities (expandable)
+function EntityItem({ entity }) {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+  const toggleExpand = () => {
+    if (!entity.properties.length) return;
+    setIsExpanded(!isExpanded);
+  };
+  return (
+    <li style={{ textAlign: 'left', margin: '5px 0' }}>
+      <button onClick={toggleExpand} style={{ marginRight: '10px', width: '25px', cursor: entity.properties.length > 0 ? 'pointer' : 'default', opacity: entity.properties.length > 0 ? 1 : 0.5 }}>
+        {entity.properties.length > 0 ? (isExpanded ? '-' : '+') : ' '}
+      </button>
+      <span>{`${entity.name} : ${entity.description}`}</span>
+      {isExpanded && entity.properties.length > 0 && (
+        <ul style={{ marginTop: '5px', marginLeft: '45px', listStyleType: 'circle' }}>
+          {entity.properties.map((prop, index) => (
+            <li key={index}>{prop}</li>
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
 
 function App() {
   const [classType, setClassType] = useState('All');
@@ -142,7 +165,7 @@ function App() {
               <h3>Solid Entities ({filteredSolidEntities.length})</h3>
               <ul>
                 {filteredSolidEntities.map((entity, idx) => (
-                  <li key={idx}>{entity}</li>
+                  <EntityItem key={entity.name + idx} entity={entity} />
                 ))}
               </ul>
             </div>
@@ -153,7 +176,7 @@ function App() {
               <h3>Point Entities ({filteredPointEntities.length})</h3>
               <ul>
                 {filteredPointEntities.map((entity, idx) => (
-                  <li key={idx}>{entity}</li>
+                  <EntityItem key={entity.name + idx} entity={entity} />
                 ))}
               </ul>
             </div>

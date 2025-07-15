@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="- Base entity subclasses show, finally." />
+    <list default="true" id="9984bd1b-af3a-43da-b402-0a0a9889444a" name="Changes" comment="- Base entity subclasses show, microfix">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/frontend/src/components/fgd_parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/frontend/src/components/fgd_parser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/frontend/src/components/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/frontend/src/components/utils.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +38,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ReactV2.0" />
+        <entry key="$PROJECT_DIR$" value="ReactV3.0" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -47,18 +52,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.GUI.executor&quot;: &quot;Run&quot;,
-    &quot;Python.backend.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ReactV3.0&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/luism/PycharmProjects/FGDcsvparser/FGDcsvparser/React&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.GUI.executor": "Run",
+    "Python.backend.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "ReactV4.0",
+    "last_opened_file_path": "C:/Users/luism/PycharmProjects/Automoverimport",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\luism\PycharmProjects\FGDcsvparser\FGDcsvparser\React" />
@@ -243,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751925860268</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="- Base entity subclasses show, microfix">
+      <option name="closed" value="true" />
+      <created>1751928023996</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1751928023996</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -277,6 +290,7 @@
     <MESSAGE value="Search entity bar added" />
     <MESSAGE value="- CSV Downloader works properly when pressing a button.&#10;- Reset button added to clean a previous use of an FGD." />
     <MESSAGE value="- Base entity subclasses show, finally." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Base entity subclasses show, finally." />
+    <MESSAGE value="- Base entity subclasses show, microfix" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Base entity subclasses show, microfix" />
   </component>
 </project>
