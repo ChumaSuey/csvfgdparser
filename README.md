@@ -33,4 +33,37 @@ The Note: "Entity counter is an approximation" is a disclaimer as early iteratio
 due to the UTF-8 file type it's possible to miss that count by little, and since FGD files for bigger and complex Quake mods (not counting a Godot game for example) have a lot of entities, it would consume time to verify this, so the counter should be accounted as an approximate.
 Regardless some Quake modders have guaranteed the number counter has been exact. (as a fun fact, the initial python script multiplied the entity counter by 2 and it had to be divided)
 
+When you go lower on the website, you will the 3 generated list of entities (Solid, Point and Base class):
+
+<img width="852" height="880" alt="image" src="https://github.com/user-attachments/assets/bdb5c24a-0d8e-4564-9f45-ef74e68759bc" />
+
+Some entities have a toggle button, this means they have some default valued properties set to them, with their description on the side.
+
+Some other entities don't have default properties attached to them, still they are shown, with an underscore on the left side where the button should be.
+
+# Notes
+
+I do hope everyone is benefitted from this web hosted tool.
+
+The parser was the heaviest part of code that required work, as UTF-8 was a complicated format work with, regardless it was a fun experience from the team perspective to solve this issue.
+
+
+# Credits
+- Chuma (programming, team lead, full-stack)
+- Nepta (programming, advice, backend)
+- Dany (Testing and Feedback, frontend programming advice)
+
+
+Special thanks to bmFbr, Paril, CommonCold and Lavender.
+
+Special thanks to:
+- Quake Mapping Community (QBSP).
+- Pacifist Paradise Community.
+All of our family and friends that support us.
+
+Documentation written by Chuma in a formal/semi-formal way while keeping the style.
+
+Personal thanks from me (Chuma) to all my family and friends that support me.
+Shine with style!
+
 
